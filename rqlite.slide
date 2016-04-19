@@ -11,7 +11,7 @@ http://www.philipotoole.com/
 * About me
 
 - Director of Data Platform Engineering at Percolate.
-- Previously full-time core developer with InfluxDB.
+- Previously a full-time core developer with InfluxDB.
 - Led the team that built Loggly's 2nd generation indexing and search platform.
 - Big fan of Go, databases, and distributed systems.
 - Fond of C, C++, and Python too.
@@ -20,6 +20,8 @@ http://www.philipotoole.com/
 * About rqlite
 
 rqlite is a distributed system, which replicates a SQLite database using the Raft consensus protocol.
+
+You can find the source at [[https://github.com/otoolep/rqlite]]
 
 * Why?
 
@@ -36,15 +38,17 @@ rqlite is a distributed system, which replicates a SQLite database using the Raf
 
 Such protocols are used to ensure multiple different nodes -- servers -- always agree on a given set of values.
 
-It allows us to build a cluster of servers, such that each node in the cluster has the same state.
+It allows us to build a cluster of servers, such that for a quorum of nodes within the cluster, each of those nodes has the same state.
 
 Within rqlite that state is a SQLite database.
 
 * Hashicorp Raft
 
-Raft implementation from Hashicorp.
+Raft implementation from Hashicorp, available at [[https://github.com/hashicorp/raft]]
 
 Used by Consul, Nomad, and InfluxDB.
+
+Another well known Raft implementation has been written by CoreOS, available at [[https://github.com/coreos/etcd/tree/master/raft]]
 
 * Integrating with Hashicorp Raft
 
@@ -58,7 +62,7 @@ Integrating with the Raft consensus module involves implementing four key functi
 
     Persist(sink raft.SnapshotSink)      // Write snapshot to persistent storage
 
-Reference use of Hashicorp's Raft implementation at [[https://github.com/otoolep/hraftd]]
+A reference use of Hashicorp's Raft implementation is available at [[https://github.com/otoolep/hraftd]]
 
 * rqlite architecture
 
@@ -93,6 +97,60 @@ rqlite clusters are most practical when 3, 5, or 7 nodes in size.
 
 Even numbers don't get you anything, and larger than 7 becomes unwieldy.
 
-rqlite is not suitable for replicating smartphone SQLite databases.
+rqlite is not suitable for replicating massive clusters, like all the SQLite databases on a smartphone network.
 
 * Demo
+
+* "Plan to throw one away. You will, anyhow."
+
+rqlite v1.0 suffered from many shortcomings.
+
+- Poor API.
+- Used the generic Go SQL interfaces.
+- Non-idiomatic Go code.
+- go-raft as the consensus module, which was not really maintained.
+
+But v1.0 was still used by others!
+
+* rqlite v2.2.0
+
+- Idiomatic Go code.
+- Much better API, thanks to experience with InfluxDB.
+- Limited use of 3rd party libraries.
+- Good use of interfaces, which encourages good testing.
+- Direct use of the Go SQLite package.
+
+* Better code means better features
+
+- Read consistency levels: _strong_, _weak_, and _none_.
+- Hot backups.
+- In-memory database support.
+- User-level permissioning.
+
+There is now a Python driver available at https://github.com/zmedico/pyrqlite
+
+* Next steps
+
+rqlite is software, and software is never finished.
+
+- Proper dependency management.
+- A fully-featured CLI.
+- Leader redirection.
+
+* What rqlite can do
+
+With it you've got a lightweight and reliable distributed store for relational data.
+
+You could use rqlite as part of a larger system, as a central store for some critical relational data, without having to run a heavier solution like MySQL.
+
+rqlite might also be an effective way to provide a small number of SQLite read-replicas.
+
+* References
+
+- [[https://github.com/otoolep/rqlite]]
+- [[https://github.com/hashicorp/raft]]
+- [[https://github.com/mattn/go-sqlite3]]
+- [[https://github.com/otoolep/hraftd]]
+- [[https://github.com/zmedico/pyrqlite]]
+- [[https://raft.github.io/]]
+- [[http://thesecretlivesofdata.com/raft/]]
