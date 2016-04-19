@@ -72,7 +72,7 @@ All repositories hosted on Github
 
 rqlite clusters are most practical when 3, 5, or 7 nodes in size.
 
-Even numbers don't get you anything, and larger than 7 becomes unwieldy.
+Even numbers don't get you anything, and larger than 9 becomes unwieldy.
 
 rqlite is not suitable for replicating massive clusters, such as all the SQLite databases on a smartphone network.
 
@@ -111,7 +111,7 @@ rqlite v1.0 suffered from many shortcomings.
 - Poor API.
 - Used the generic Go SQL interfaces.
 - Non-idiomatic Go code.
-- go-raft as the consensus module, which was not really maintained.
+- go-raft as the consensus module, which was nearing its end-of-life.
 
 But v1.0 was still used!
 
