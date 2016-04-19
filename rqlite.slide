@@ -1,0 +1,98 @@
+rqlite
+Replicating SQLite using Raft consensus
+
+Philip O'Toole
+GoSF April 20th 2016
+
+philip.otoole@yahoo.com
+http://www.philipotoole.com/
+@general_order24
+
+* About me
+
+- Director of Data Platform Engineering at Percolate.
+- Previously full-time core developer with InfluxDB.
+- Led the team that built Loggly's 2nd generation indexing and search platform.
+- Big fan of Go, databases, and distributed systems.
+- Fond of C, C++, and Python too.
+- Don't like node.js.
+
+* About rqlite
+
+rqlite is a distributed system, which replicates a SQLite database using the Raft consensus protocol.
+
+* Why?
+
+* Why replicate SQLite?
+
+- Rock solid relational database.
+- With replication, you get reliability.
+- Easy installation and deployment, thanks to Go.
+- Lightweight operation.
+
+* What is Raft?
+
+* Raft is a distributed consensus protocol.
+
+Such protocols are used to ensure multiple different nodes -- servers -- always agree on a given set of values.
+
+It allows us to build a cluster of servers, such that each node in the cluster has the same state.
+
+Within rqlite that state is a SQLite database.
+
+* Hashicorp Raft
+
+Raft implementation from Hashicorp.
+
+Used by Consul, Nomad, and InfluxDB.
+
+* Integrating with Hashicorp Raft
+
+Integrating with the Raft consensus module involves implementing four key functions.
+
+    Apply(l *raft.Log) interface{}       // Apply a committed entry to the state machine
+
+    Snapshot() (raft.FSMSnapshot, error) // Returns a snapshot of the state machine
+
+    Restore(rc io.ReadCloser) error      // Create state machine from snapshot
+
+    Persist(sink raft.SnapshotSink)      // Write snapshot to persistent storage
+
+Reference use of Hashicorp's Raft implementation at [[https://github.com/otoolep/hraftd]]
+
+* rqlite architecture
+
+* A rqlite node
+
+                 ┌ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┐    ┌ ─ ─ ─ ─ ┐
+                             Clients                   Other
+                 └ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┘    │  Nodes  │
+                                │                    ─ ─ ─ ─ ─
+                                │                        ▲
+                                │                        │
+                                │                        │
+                                ▼                        ▼
+                 ┌─────────────────────────────┐ ┌───────────────┐
+                 │            HTTP             │ │      TCP      │
+                 └─────────────────────────────┘ └───────────────┘
+                 ┌───────────────────────────────────────────────┐
+                 │             Raft (hashicorp/raft)             │
+                 └───────────────────────────────────────────────┘
+                 ┌───────────────────────────────────────────────┐
+                 │               matt-n/go-sqlite3               │
+                 └───────────────────────────────────────────────┘
+                 ┌───────────────────────────────────────────────┐
+                 │                   sqlite3.c                   │
+                 └───────────────────────────────────────────────┘
+
+All repositories hosted on Github
+
+* rqlite clusters
+
+rqlite clusters are most practical when 3, 5, or 7 nodes in size.
+
+Even numbers don't get you anything, and larger than 7 becomes unwieldy.
+
+rqlite is not suitable for replicating smartphone SQLite databases.
+
+* Demo
