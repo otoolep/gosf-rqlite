@@ -99,7 +99,7 @@ rqlite clusters are most practical when 3, 5, or 7 nodes in size.
 
 Even numbers don't get you anything, and larger than 7 becomes unwieldy.
 
-rqlite is not suitable for replicating massive clusters, like all the SQLite databases on a smartphone network.
+rqlite is not suitable for replicating massive clusters, such as all the SQLite databases on a smartphone network.
 
 * Demo
 
