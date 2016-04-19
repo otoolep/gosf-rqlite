@@ -21,13 +21,15 @@ http://www.philipotoole.com/
 
 rqlite is a distributed system, which replicates a SQLite database using the Raft consensus protocol.
 
-You can find the source at [[https://github.com/otoolep/rqlite]]
+You can find the source at [[https://github.com/otoolep/rqlite]].
+
+The current release is v2.2.0.
 
 * Why?
 
 * Why replicate SQLite?
 
-- Rock solid relational database.
+- Rock solid relational database, within a single C soure file.
 - With replication, you get reliability.
 - Easy installation and deployment, thanks to Go.
 - Lightweight operation.
@@ -52,7 +54,7 @@ Another well known Raft implementation has been written by CoreOS, available at 
 
 * Integrating with Hashicorp Raft
 
-Integrating with the Raft consensus module involves implementing four key functions.
+Integrating with the Raft consensus module involves implementing five key functions.
 
     Apply(l *raft.Log) interface{}       // Apply a committed entry to the state machine
 
@@ -61,6 +63,8 @@ Integrating with the Raft consensus module involves implementing four key functi
     Restore(rc io.ReadCloser) error      // Create state machine from snapshot
 
     Persist(sink raft.SnapshotSink)      // Write snapshot to persistent storage
+
+    Release()                            // Snapshot release. Usually a no-op
 
 A reference use of Hashicorp's Raft implementation is available at [[https://github.com/otoolep/hraftd]]
 
@@ -101,6 +105,8 @@ rqlite is not suitable for replicating massive clusters, like all the SQLite dat
 
 * Demo
 
+* Lessons learned
+
 * "Plan to throw one away. You will, anyhow."
 
 rqlite v1.0 suffered from many shortcomings.
@@ -110,14 +116,14 @@ rqlite v1.0 suffered from many shortcomings.
 - Non-idiomatic Go code.
 - go-raft as the consensus module, which was not really maintained.
 
-But v1.0 was still used by others!
+But v1.0 was still used!
 
 * rqlite v2.2.0
 
 - Idiomatic Go code.
 - Much better API, thanks to experience with InfluxDB.
 - Limited use of 3rd party libraries.
-- Good use of interfaces, which encourages good testing.
+- Good use of interfaces, which allows better testing.
 - Direct use of the Go SQLite package.
 
 * Better code means better features
@@ -127,7 +133,7 @@ But v1.0 was still used by others!
 - In-memory database support.
 - User-level permissioning.
 
-There is now a Python driver available at https://github.com/zmedico/pyrqlite
+There is now a Python driver available at [[https://github.com/zmedico/pyrqlite]]
 
 * Next steps
 
