@@ -41,30 +41,6 @@ It allows us to build a cluster of servers, such that for a quorum of servers wi
 
 Within rqlite that state is a SQLite database.
 
-* Hashicorp Raft
-
-Raft implementation from Hashicorp, available at [[https://github.com/hashicorp/raft]]
-
-Used by Consul, Nomad, and InfluxDB.
-
-Another well known Raft implementation has been written by CoreOS, available at [[https://github.com/coreos/etcd/tree/master/raft]]
-
-* Integrating with Hashicorp Raft
-
-Integrating with the Raft consensus module involves implementing five key functions.
-
-    Apply(l *raft.Log) interface{}       // Apply a committed entry to the state machine
-
-    Snapshot() (raft.FSMSnapshot, error) // Returns a snapshot of the state machine
-
-    Restore(rc io.ReadCloser) error      // Create state machine from snapshot
-
-    Persist(sink raft.SnapshotSink)      // Write snapshot to persistent storage
-
-    Release()                            // Snapshot release. Usually a no-op
-
-A reference use of Hashicorp's Raft implementation is available at [[https://github.com/otoolep/hraftd]]
-
 * rqlite architecture
 
 * A rqlite node
@@ -99,6 +75,30 @@ rqlite clusters are most practical when 3, 5, or 7 nodes in size.
 Even numbers don't get you anything, and larger than 7 becomes unwieldy.
 
 rqlite is not suitable for replicating massive clusters, such as all the SQLite databases on a smartphone network.
+
+* Hashicorp Raft
+
+Raft implementation from Hashicorp, available at [[https://github.com/hashicorp/raft]]
+
+Used by Consul, Nomad, and InfluxDB.
+
+Another well known Raft implementation has been written by CoreOS, available at [[https://github.com/coreos/etcd/tree/master/raft]]
+
+* Integrating with Hashicorp Raft
+
+Integrating with the Raft consensus module involves implementing five key functions.
+
+    Apply(l *raft.Log) interface{}       // Apply a committed entry to the state machine
+
+    Snapshot() (raft.FSMSnapshot, error) // Returns a snapshot of the state machine
+
+    Restore(rc io.ReadCloser) error      // Create state machine from snapshot
+
+    Persist(sink raft.SnapshotSink)      // Write snapshot to persistent storage
+
+    Release()                            // Snapshot release. Usually a no-op
+
+A reference use of Hashicorp's Raft implementation is available at [[https://github.com/otoolep/hraftd]]
 
 * Demo
 
@@ -155,5 +155,6 @@ rqlite might also be an effective way to provide a small number of SQLite read-r
 - [[https://github.com/mattn/go-sqlite3]]
 - [[https://github.com/otoolep/hraftd]]
 - [[https://github.com/zmedico/pyrqlite]]
+- [[https://github.com/goraft/raft]]
 - [[https://raft.github.io/]]
 - [[http://thesecretlivesofdata.com/raft/]]
