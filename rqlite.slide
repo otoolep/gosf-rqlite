@@ -37,7 +37,7 @@ The current release is v2.2.0.
 
 Such protocols are used to ensure multiple different nodes -- servers -- always agree on a given set of values.
 
-It allows us to build a cluster of servers, such that for a quorum of nodes within the cluster, each of those nodes has the same state.
+It allows us to build a cluster of servers, such that for a quorum of servers within the cluster, each of those servers has the same state.
 
 Within rqlite that state is a SQLite database.
 
