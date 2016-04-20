@@ -16,11 +16,11 @@ http://www.philipotoole.com/
 
 * About rqlite
 
-rqlite is a distributed system, which replicates a SQLite database using the Raft consensus protocol.
+rqlite is a distributed system, which fully replicates a SQLite database using the Raft consensus protocol.
 
 You can find the source at [[https://github.com/otoolep/rqlite]].
 
-The current release is v2.2.0.
+The current release is v2.2.1.
 
 * Why?
 
@@ -113,9 +113,9 @@ rqlite v1.0 suffered from many shortcomings.
 - Non-idiomatic Go code.
 - go-raft as the consensus module, which was nearing its end-of-life.
 
-But v1.0 was still used!
+But v1.0 was still used to build [[https://github.com/openmarket/openmarket]], a bitcoin-based marketplace!
 
-* rqlite v2.2.0
+* rqlite v2.2.1
 
 - Idiomatic Go code.
 - Much better API, thanks to experience with InfluxDB.
@@ -156,5 +156,6 @@ rqlite might also be an effective way to provide a small number of SQLite read-r
 - [[https://github.com/otoolep/hraftd]]
 - [[https://github.com/zmedico/pyrqlite]]
 - [[https://github.com/goraft/raft]]
+- [[https://github.com/openmarket/openmarket]]
 - [[https://raft.github.io/]]
 - [[http://thesecretlivesofdata.com/raft/]]
