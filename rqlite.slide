@@ -26,7 +26,7 @@ The current release is v2.2.1.
 
 * Why replicate SQLite?
 
-- Rock solid relational database, within a single C soure file.
+- Rock solid relational database, within a single C source file.
 - With replication, you get reliability.
 - Easy installation and deployment, thanks to Go.
 - Lightweight operation.
