@@ -150,7 +150,7 @@ rqlite might also be an effective way to provide a small number of SQLite read-r
 
 * References
 
-- [[https://github.com/otoolep/rqlite]]
+- [[https://github.com/rqlite/rqlite]]
 - [[https://github.com/hashicorp/raft]]
 - [[https://github.com/mattn/go-sqlite3]]
 - [[https://github.com/otoolep/hraftd]]
